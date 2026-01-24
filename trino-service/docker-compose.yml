@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  trino:
+    image: trinodb/trino:451
+    container_name: trino
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./trino/catalog:/etc/trino/catalog
+    depends_on:
+      - hive-metastore
+    networks:
+      - lakehouse
+
+  hive-metastore:
+    image: apache/hive:4.0.0
+    container_name: hive-metastore
+    environment:
+      SERVICE_NAME: metastore
+      HIVE_METASTORE_URI: thrift://hive-metastore:9083
+    volumes:
+      - ./hive/metastore:/opt/hive/data/metastore
+    ports:
+      - "9083:9083"
+    networks:
+      - lakehouse
+
+networks:
+  lakehouse:
+    external: true

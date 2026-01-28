@@ -5,13 +5,13 @@ services:
     image: trinodb/trino:451
     container_name: trino
     ports:
-      - "8080:8080"
+      - "8082:8080"
     volumes:
       - ./trino/catalog:/etc/trino/catalog
     depends_on:
       - hive-metastore
     networks:
-      - lakehouse
+      - src_lakehouse
 
   hive-metastore:
     image: apache/hive:4.0.0
@@ -24,8 +24,7 @@ services:
     ports:
       - "9083:9083"
     networks:
-      - lakehouse
-
+      - src_lakehouse
 networks:
-  lakehouse:
+  src_lakehouse:
     external: true

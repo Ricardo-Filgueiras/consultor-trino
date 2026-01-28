@@ -1,4 +1,4 @@
-#  консультант Trino
+#  Consultor Trino
 
 ## Visão Geral
 
